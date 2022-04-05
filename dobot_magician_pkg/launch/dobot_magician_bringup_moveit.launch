@@ -1,0 +1,20 @@
+<launch>
+
+
+  <!-- Launch Gazebo  -->
+  <include file="$(find dobot_magician_pkg)/launch/dobot_magician_gazebo.launch" />   
+
+  <!-- ros_control dobot magician launch file -->
+  <include file="$(find dobot_magician_pkg)/launch/dobot_magician_gazebo_states.launch" />   
+
+  <!-- ros_control position control dobot magician launch file -->
+  <!---include file="$(find dobot_magician_pkg)/launch/dobot_magician_gazebo_position.launch" /-->  
+
+  <!-- ros_control trajectory control dobot magician launch file -->
+  <include file="$(find dobot_magician_pkg)/launch/dobot_magician_trajectory_controller.launch" />    
+
+  <!-- moveit launch file -->
+  <include file="$(find dobot_magician_config_pkg)/launch/moveit_planning_execution.launch" />    
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+</launch>

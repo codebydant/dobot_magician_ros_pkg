@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="dobot_magician" >
+
+<!--- ________________________________________________________-->
+<!--- _________________TRANSMISSION BLOCK SUBRUTINE___________-->
+<!--- ________________________________________________________--> 
+
+   <xacro:macro name="transmission_block" params="joint_name">
+	  <transmission name="tran1">
+	    <type>transmission_interface/SimpleTransmission</type>
+	    <joint name="${joint_name}">
+	      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+	    </joint>
+	    <actuator name="motor1">	      
+	      <mechanicalReduction>1</mechanicalReduction>
+	    </actuator>
+	  </transmission>
+   </xacro:macro>
+
+<!--- ________________________________________________________-->
+<!--- ____________________BOTTOM_LINK_________________________-->
+<!--- ________________________________________________________--> 
+ 
+  <link name="bottom_link">
+
+    <visual>
+      <origin xyz=" 0 0 -0.04"  rpy="0 0 0"/>
+      <geometry>
+	 <box size="1 1 0.02" />
+      </geometry>
+      <material name="Brown" />
+    </visual>
+
+    <collision>
+      <origin xyz=" 0 0 -0.04"  rpy="0 0 0"/>
+      <geometry>
+	  <box size="1 1 0.02" />
+      </geometry>
+      </collision>>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________BOTTOM_JOINT________________________-->
+<!--- ________________________________________________________--> 
+ 
+  <joint name="bottom_joint" type="fixed">
+
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="bottom_link"/>
+    <child link="base_link"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK 0 - BASE_LINK__________________-->
+<!--- ________________________________________________________--> 
+ 
+<link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+       <mesh filename="package://dobot_magician_pkg/meshes/base.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color  rgba="1 1 1 1" />
+      </material>
+    </visual>
+
+      <inertial>
+      	<mass value="5" />
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      </inertial>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+         <mesh filename="package://dobot_magician_pkg/meshes/base.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT-BASE__________________________-->
+<!--- ________________________________________________________--> 
+
+ <joint name="joint_base" type="revolute">
+
+    <origin xyz="0 0 0.101" rpy="0.03 0 0" />
+    <parent link="base_link" />
+    <child  link="link_1" />
+    <axis   xyz="0 0 1" />
+    <limit effort="300" velocity="0.4" lower="-3" upper="3"/>
+    <dynamics damping="20" friction="1"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK 1______________________________-->
+<!--- ________________________________________________________--> 
+
+  <link name="link_1">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/link1.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color  rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+ 
+     <inertial>
+      	<mass value="0.05" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1" />
+    </inertial>
+
+    <collision>
+      <origin xyz="0 0.01 0.035" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/link1.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT 2_____________________________-->
+<!--- ________________________________________________________--> 
+
+  <joint name="joint_2" type="revolute">
+
+    <origin xyz="-0.07203 0 0.026" rpy="0 0 -1.5" />
+    <parent link="link_1" />
+    <child  link="link_2" />
+    <axis   xyz="0 1 0" />
+    <limit effort="300" velocity="0.4" lower="-2.18" upper="-0.65"/>
+    <dynamics damping="50" friction="1"/>
+
+   </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK 2______________________________-->
+<!--- ________________________________________________________--> 
+
+   <link name="link_2">
+
+    
+   <visual>
+      <origin xyz="0 0 0" rpy="0 1 0" />
+      <geometry>
+          <mesh filename="package://dobot_magician_pkg/meshes/Link_2.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color  rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+      <inertial>
+      	<mass value="0.05" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1" />
+      </inertial>
+
+    <collision>
+     <origin xyz="0 -0.0745 0" rpy="0 1 0" />
+      <geometry>
+          <mesh filename="package://dobot_magician_pkg/meshes/Link_2.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT 3_____________________________-->
+<!--- ________________________________________________________--> 
+
+  <joint name="joint_3" type="revolute">
+
+    <origin xyz="0.065 0.084 0.16" rpy="0 2 0" />
+    <parent link="link_2" />
+    <child  link="link_3" />
+    <axis   xyz="0 1 0" />
+    <limit effort="300" velocity="0.4" lower="-2.18" upper="-1.26"/>
+    <dynamics damping="50" friction="1"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK 3______________________________-->
+<!--- ________________________________________________________--> 
+
+
+  <link name="link_3">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Link_3.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color  rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+      <inertial>
+      	<mass value="0.1" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+      </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+    <mesh filename="package://dobot_magician_pkg/meshes/Link_3.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT 4_____________________________-->
+<!--- ________________________________________________________--> 
+
+  <joint name="joint_4" type="revolute">
+
+    <origin xyz="-0.135 -0.0005 0.12" rpy="0 -1 0" />
+    <parent link="link_3" />
+    <child  link="link_4" />
+    <axis   xyz="0 1 0" />
+    <limit effort="300" velocity="0.4" lower="1.30" upper="2.01"/>
+    <dynamics damping="50" friction="1"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK 4______________________________-->
+<!--- ________________________________________________________--> 
+
+  <link name="link_4">
+    
+    <visual>
+      <origin xyz="0 -0.005 0" rpy="1.55 0 3.15" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/link_4.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color  rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <inertial>
+      	<mass value="0.1" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+    </inertial>
+
+    <collision>
+      <origin xyz="0 -0.005 0" rpy="1.55 0 3.15" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/link_4.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT GRIPPER_______________________-->
+<!--- ________________________________________________________-->
+
+  <joint name="joint_gripper" type="revolute">
+
+    <origin xyz="-0.036 0 -0.04" rpy="0 0 0" />
+    <parent link="link_4" />
+    <child link="Gripper_joint" />
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.4" lower="-3.18" upper="3.18"/>
+    <dynamics damping="50" friction="1"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK_GRIPPER________________________-->
+<!--- ________________________________________________________--> 
+
+  <link name="Gripper_joint">
+
+   <visual>
+      <origin xyz="0 0 0.037" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_part_1.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+      <inertial>
+      	<mass value="0.2" />
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+      </inertial>
+
+    <collision>
+      <origin xyz="0 0 0.037" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_part_1.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT_GRIPPER_FINGER_LEFT___________-->
+<!--- ________________________________________________________-->
+
+   <joint name="Gripper_left" type="revolute">
+
+    <origin xyz="0.013 0.01 -0.012" rpy="0 0 0" />
+    <parent link="Gripper_joint" />
+    <child link="Gripper_finger_left" />
+    <axis xyz="0 1 0" />
+    <limit effort="300" velocity="0.4" lower="-2.7" upper="2.7"/>
+     <dynamics damping="50" friction="1"/>
+
+  </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK_GRIPPER_LEFT___________________-->
+<!--- ________________________________________________________--> 
+
+  <link name="Gripper_finger_left">
+
+   <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_left.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+     <inertial>
+      	<mass value="0.2" />
+        <inertia ixx="0.000012" ixy="0.0" ixz="0.0" iyy="0.000013" iyz="0.0" izz="0.000019" />
+      </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_left.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- ____________________JOINT GRIPPER_FINGER_RIGHT__________-->
+<!--- ________________________________________________________-->
+
+   <joint name="Gripper_right" type="revolute">
+
+    <origin xyz="-0.013 0.01 -0.012" rpy="0 0 0" />
+    <parent link="Gripper_joint" />
+    <child link="Gripper_finger_right" />
+    <axis xyz="0 -1 0" />  
+    <limit effort="300" velocity="0.4" lower="2.7" upper="3.3"/>
+    <dynamics damping="50" friction="1"/>
+
+   </joint>
+
+<!--- ________________________________________________________-->
+<!--- ____________________LINK_FINGER_GRIPPER RIGHT___________-->
+<!--- ________________________________________________________--> 
+
+  <link name="Gripper_finger_right">
+
+   <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_right.dae"/>
+      </geometry>
+      <material name="Aluminum 6061">
+        <color rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+
+     <inertial>
+      	<mass value="0.2" />
+        <inertia ixx="0.000012" ixy="0.0" ixz="0.0" iyy="0.000013" iyz="0.0" izz="0.000019" />
+     </inertial>
+
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://dobot_magician_pkg/meshes/Gripper_right.dae"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+<!--- ________________________________________________________-->
+<!--- _________________TRANSMISSION BLOCK_____________________-->
+<!--- ________________________________________________________--> 
+
+   <xacro:transmission_block joint_name="joint_base"/>
+   <xacro:transmission_block joint_name="joint_2"/>
+   <xacro:transmission_block joint_name="joint_3"/>
+   <xacro:transmission_block joint_name="joint_4"/>
+   <xacro:transmission_block joint_name="joint_gripper"/>
+   <xacro:transmission_block joint_name="Gripper_left"/>
+   <xacro:transmission_block joint_name="Gripper_right"/>
+  
+<!--- ________________________________________________________-->
+<!--- _________________GAZEBO PLUGIN__________________________-->
+<!--- ________________________________________________________--> 
+  
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/dobot_magician</robotNamespace>
+    </plugin>
+  </gazebo>
+
+
+<!--- ___________________________________DESCRIPTION END________________________________________________________ -->
+
+<!--- ___________________________________DESCRIPTION DOBOT MAGICIAN_____________________________________________ -->
+<!--- _DANIEL_TOBON_COLLAZOS_2126550_____________________________________________________________________________-->
+
+</robot>

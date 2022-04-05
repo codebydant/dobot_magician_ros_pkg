@@ -1,0 +1,7 @@
+<launch>
+	<rosparam file="$(find dobot_magician_pkg)/config/trajectory_control.yaml" command="load"/>
+
+  <node name="dobot_magician_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/dobot_magician" args="dobot_magician_joint_controller 	     gripper_controller"/>
+
+</launch>
