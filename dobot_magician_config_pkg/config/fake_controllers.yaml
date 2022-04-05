@@ -1,0 +1,13 @@
+controller_list:
+  - name: fake_Dobot_controller
+    joints:
+      - joint_base
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_gripper
+      - Gripper_right
+  - name: fake_gripper_controller
+    joints:
+      - Gripper_left
+      - Gripper_right

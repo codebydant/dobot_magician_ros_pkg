@@ -1,0 +1,20 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: dobot_magician/dobot_magician_joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - joint_base
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_gripper
+      
+  - name: dobot_magician/gripper_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - Gripper_left
+      - Gripper_right

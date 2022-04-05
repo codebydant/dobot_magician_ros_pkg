@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: dobot_magician_pkg
+    relative_path: urdf/dobot_magician_solidworks_model.xacro
+  SRDF:
+    relative_path: config/dobot_magician.srdf
+  CONFIG:
+    author_name: Daniel Tobon
+    author_email: daniel.tobon@uao.edu.co
+    generated_timestamp: 1495628572
